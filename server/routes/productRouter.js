@@ -13,4 +13,6 @@ router.get('/products', async (req, res) => {
     }
 })
 
+router.get('/products-by-categories', )
+
 module.exports = router
