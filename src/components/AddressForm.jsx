@@ -2,12 +2,17 @@
 import { useForm } from "react-hook-form";
 import Button from "./elements/Button";
 import { ReactComponent as ArrowRightSvg } from "../assets/icons/right-arrow-svgrepo-com.svg";
-export const AddressForm = () => {
-    const { register, handleSubmit } = useForm();
+import { useDispatch } from "react-redux";
+import { setAddress } from "../stores/userInfo/addressSlice";
+export const AddressForm = ({ onTabSwitch }) => {
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        console.log(data)
+        dispatch(setAddress(data));
+        onTabSwitch('Payment');
     }
+
 
     return (
         <form className="md:w-2/3 md:mx-auto px-3 pt-1" onSubmit={handleSubmit(onSubmit)}>
