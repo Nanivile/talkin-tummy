@@ -15,6 +15,15 @@ var corsOptions = {
     origin: "http://localhost:3000"
 }
 
+const calculateOrderAmount = (orderItems) => {
+    const initialValue = 0;
+    const itemsPrice = orderItems.reduce(
+        (previousValue, currentValue) =>
+        previousValue + currentValue.price * currentValue.amount, initialValue
+    );
+    return itemsPrice * 100;
+}
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -85,3 +94,29 @@ app.listen(PORT, () => {
 })
 app.use('/api/', productRouter)
 
+app.post('/create-payment-intent', async(req, res) => {
+    try {
+        // const { orderItems, shippingAddress, userId } = req.body;
+
+        // const totalPrice = calculateOrderAmount(orderItems);
+        //TEMP
+        const totalPrice = 100;
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalPrice,
+            currency: 'usd'
+        })
+
+        // TODO: Create Order
+
+        res.send({
+            clientSecret: paymentIntent.client_secret
+        })
+    } catch(e) {
+        res.status(400).json({
+            error:{
+                message: e.message
+            }
+        })
+    }
+})
