@@ -37,6 +37,7 @@
 - Express
 - Node.js
 - Redux
+- Stripe
 
 
 
