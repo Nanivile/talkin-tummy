@@ -46,7 +46,7 @@
 <img src="https://i.imgur.com/sjrvgXO.png">
 
 ### Click [here](https://trello.com/b/GRZRV3YT/project-4) to view Trello board
-### Click [here](https://talkintummy-e0c056ea6ee7.herokuapp.com/) to launch Talkin' Tummy
+<!-- ### Click [here](https://talkintummy-e0c056ea6ee7.herokuapp.com/) to launch Talkin' Tummy -->
 
 # Next Steps
 
