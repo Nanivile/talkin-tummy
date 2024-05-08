@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import Button from "./elements/Button";
 import { ReactComponent as ArrowRightSvg } from "../assets/icons/right-arrow-svgrepo-com.svg";
@@ -71,8 +70,8 @@ export const AddressForm = ({ onTabSwitch }) => {
                     />
                 </div>
             </div>
-            <div className="flex justify-end p-2">
-                <Button variant="dark" className="flex items-center" type="submit"><span className="mr-1">Next</span><ArrowRightSvg /></Button>
+            <div className="flex justify-end p-2 size-16">
+                <Button variant="dark" className="flex items-center size-16" type="submit"><span className="mr-1">Next</span></Button>
             </div>
         </form>
     )

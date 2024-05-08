@@ -6,12 +6,18 @@ const db = require('./db');
 
 const app = express();
 const productRouter = require('./routes/productRouter')
+const userRouter = require('./routes/productRouter');
 
 const Order = require('./models/orderModel')
 
-const env = require('dotenv').config({ path: '../.env' });
-
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const env = require('dotenv').config({ path: '.env' });
+console.log(env)
+const sk_key = process.env.STRIPE_SECRET_KEY
+console.log(sk_key)
+const Stripe = require('stripe')
+const stripe = new Stripe(sk_key, {
+    apiVersion: '2020-08-27', 
+})
 
 var corsOptions = {
     origin: "http://localhost:3000"
@@ -95,13 +101,15 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
 app.use('/api/', productRouter)
-
+app.use('/api/', userRouter)
 app.post('/create-payment-intent', async(req, res) => {
+    console.log('hello')
+    console.log(req.body)
     try {
         const { orderItems, shippingAddress, userId } = req.body;
 
         const totalPrice = calculateOrderAmount(orderItems);
-
+console.log(totalPrice)
         const taxPrice = 0;
         const shippingPrice = 0;
 
@@ -114,15 +122,16 @@ app.post('/create-payment-intent', async(req, res) => {
             shippingPrice,
             user: ''
         })
-
-        await order.save();
+console.log(order)
+        // await order.save();
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalPrice,
-            currency: 'usd'
+            currency: 'usd',
+            payment_method_types: ["card"],
+            description: orderItems[0].description
         })
-
-        // TODO: Create Order
+console.log (paymentIntent)
 
         res.send({
             clientSecret: paymentIntent.client_secret
